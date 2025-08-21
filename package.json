@@ -1,6 +1,6 @@
 {
   "name": "spec-workflow-mcp",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "MCP server for managing spec workflow (requirements, design, implementation)",
   "type": "module",
   "main": "dist/index.js",

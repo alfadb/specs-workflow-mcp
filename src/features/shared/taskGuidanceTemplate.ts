@@ -161,7 +161,10 @@ export class TaskGuidanceExtractor {
       if (!line.trim()) continue;
 
       if (line.includes("[ ]")) {
-        const taskMatch = line.match(/(\d+(?:\.\d+)*)\.\s*(.+)/);
+        // Match task number that appears after list markers and before descriptions
+        const taskMatch = line.match(
+          /^[\s\-*]*\[[ ]\][\s\-*]*(\d+(?:\.\d+)*)\.\s*(.+)/
+        );
         if (taskMatch) {
           const taskNumber = taskMatch[1];
           const taskDesc = taskMatch[2].replace(/\*\*|\*/g, "").trim();
