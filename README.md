@@ -11,18 +11,17 @@ Guide AI to systematically complete software development through a structured **
 ## Table of Contents
 
 - [Why Use It?](#why-use-it)
-- [Recent Updates](#recent-updates)
 - [Quick Start](#quick-start)
 - [Remote Development](#remote-development)
   - [VS Code Remote SSH](#vs-code-remote-ssh)
   - [WSL Development](#wsl-development)
 - [Workflow Example](#workflow-example)
 - [Document Organization](#document-organization)
-- [Installation](#installation)
-- [Development Environment Setup](#development-environment-setup)
-- [Advanced Usage](#advanced-usage)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
+- [Installation Guide](#installation-guide)
+- [AI Usage Guidelines](#ai-usage-guidelines)
+- [Changelog](#changelog)
+- [Links](#links)
+- [License](#license)
 
 ## Why Use It?
 
@@ -41,33 +40,6 @@ Guide AI to systematically complete software development through a structured **
 - Each stage requires confirmation, ensuring correct direction
 - **Persistent progress**: Continue from where you left off with `check`, even in new conversations
 
-## Recent Updates
-
-> **v1.0.8**
->
-> - 🌐 **Remote Development Support**: Full VS Code Remote SSH compatibility with automatic environment detection and path resolution
-> - 🐧 **WSL Support**: Complete WSL (Windows Subsystem for Linux) integration with Windows-Linux path conversion and environment detection
->
-> **v1.0.7**
->
-> - 🎯 Improved reliability for most models to manage tasks with spec workflow
->
-> **v1.0.6**
->
-> - ✨ Batch task completion: Complete multiple tasks at once for faster progress on large projects
->
-> **v1.0.5**
->
-> - 🐛 Edge case fixes: Distinguish between "task not found" and "task already completed" to prevent workflow interruption
->
-> **v1.0.4**
->
-> - ✅ Task management: Added task completion tracking for systematic project progression
->
-> **v1.0.3**
->
-> - 🎉 Initial release: Core workflow framework for Requirements → Design → Tasks
-
 ## Quick Start
 
 ### 1. Install (Claude Code Example)
@@ -76,21 +48,21 @@ Guide AI to systematically complete software development through a structured **
 claude mcp add spec-workflow-mcp -s user -- npx -y spec-workflow-mcp@latest
 ```
 
-See [full installation guide](#installation) for other clients.
+See [full installation guide](#installation-guide) for other clients.
 
 ### 2. Start a New Project
 
 ```
-"Help me use spec workflow to create a user authentication system"
+"Help me create a user authentication system using spec workflow"
 ```
 
 ### 3. Continue Existing Project
 
 ```
-"Use spec workflow to check ./my-project"
+"Use spec workflow check ./my-project"
 ```
 
-The AI will automatically detect project status and continue from where it left off.
+AI will automatically detect project status and continue from where you left off.
 
 ---
 
@@ -100,14 +72,14 @@ This MCP server includes comprehensive support for remote development environmen
 
 ### Supported Environments
 
-- **Local Development**: Standard local file system
+- **Local Development**: Standard local filesystem
 - **VS Code Remote SSH**: SSH connections with automatic path resolution
 - **WSL**: Windows Subsystem for Linux with Windows-Linux path conversion
 - **Containers**: Docker and other containerized environments
 
-### Quick Start
+### Quick Setup
 
-#### Remote SSH Setup
+#### Remote SSH Configuration
 
 ```bash
 # 1. Connect via VS Code Remote SSH
@@ -117,7 +89,7 @@ cd specs-workflow-mcp
 ./scripts/setup-remote.sh
 ```
 
-#### WSL Setup
+#### WSL Configuration
 
 ```bash
 # In WSL terminal
@@ -129,7 +101,7 @@ cd specs-workflow-mcp
 ### Key Features
 
 - 🔍 **Automatic Environment Detection**: Detects SSH, WSL, and container environments
-- �️ **Smart Path Resolution**: Handles cross-platform path conversion
+- 🛤️ **Smart Path Resolution**: Handles cross-platform path conversion
 - ⚙️ **VS Code Integration**: Pre-configured tasks, debugging, and extensions
 - 📊 **Environment Logging**: Detailed environment information for troubleshooting
 
@@ -145,25 +117,25 @@ For complete setup guides, troubleshooting, and advanced configuration:
 
 ## Workflow Example
 
-### 1. You describe requirements
+### 1. You Describe Requirements
 
 ```
 You: "I need to build a user authentication system"
 ```
 
-### 2. AI creates structured documents
+### 2. AI Creates Structured Documents
 
 ```
-AI: "I'll help you create spec workflow for user authentication..."
+AI: "I'll help you create a spec workflow for user authentication..."
 
-📝 requirements.md - User stories and functional requirements
+📝 requirements.md - User stories and feature requirements
 🎨 design.md - Technical architecture and design decisions
 ✅ tasks.md - Concrete implementation task list
 ```
 
-### 3. Review and implement step by step
+### 3. Step-by-Step Review and Implementation
 
-After each stage, the AI requests your confirmation before proceeding, ensuring the project stays on the right track.
+After each phase completion, AI will request your confirmation before proceeding to ensure the project stays on the right track.
 
 ## Document Organization
 
@@ -171,39 +143,39 @@ After each stage, the AI requests your confirmation before proceeding, ensuring 
 
 ```
 my-project/specs/
-├── requirements.md              # Requirements: user stories, functional specs
-├── design.md                    # Design: architecture, APIs, data models
-├── tasks.md                     # Tasks: numbered implementation steps
-└── .workflow-confirmations.json # Status: automatic progress tracking
+├── requirements.md              # Requirements: User stories, feature specs
+├── design.md                    # Design: Architecture, APIs, data models
+├── tasks.md                     # Tasks: Numbered implementation steps
+└── .workflow-confirmations.json # Status: Automatic progress tracking
 ```
 
-### Multi-module Projects
+### Multi-Module Projects
 
 ```
 my-project/specs/
-├── user-authentication/         # Auth module
+├── user-authentication/         # Authentication module
 ├── payment-system/             # Payment module
 └── notification-service/       # Notification module
 ```
 
-You can specify any directory: `"Use spec workflow to create auth docs in ./src/features/auth"`
+You can specify any directory: `"Create auth docs using spec workflow in ./src/features/auth"`
 
-## 📦 Installation
+## 📦 Installation Guide
 
 <details>
 <summary>Installation Instructions</summary>
 
-### Requirements
+### System Requirements
 
 - Node.js ≥ v18.0.0
 - npm or yarn
 - Claude Desktop or any MCP-compatible client
 
-### Install in Different MCP Clients
+### Installation in Different MCP Clients
 
 #### Claude Code (Recommended)
 
-Use the Claude CLI to add the MCP server:
+Use Claude CLI to add the MCP server:
 
 ```bash
 claude mcp add spec-workflow-mcp -s user -- npx -y spec-workflow-mcp@latest
@@ -211,7 +183,7 @@ claude mcp add spec-workflow-mcp -s user -- npx -y spec-workflow-mcp@latest
 
 #### Claude Desktop
 
-Add to your Claude Desktop configuration:
+Add to your Claude Desktop configuration file:
 
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%/Claude/claude_desktop_config.json`
@@ -230,7 +202,7 @@ Add to your Claude Desktop configuration:
 
 #### Cursor
 
-Add to your Cursor configuration (`~/.cursor/config.json`):
+Add to your Cursor configuration file (`~/.cursor/config.json`):
 
 ```json
 {
@@ -245,18 +217,18 @@ Add to your Cursor configuration (`~/.cursor/config.json`):
 
 #### Cline
 
-Use Cline's MCP server management UI to add the server:
+Use Cline's MCP server management interface to add the server:
 
-1. Open VS Code with Cline extension
+1. Open VS Code with Cline extension installed
 2. Open Cline settings (gear icon)
 3. Navigate to MCP Servers section
-4. Add new server with:
+4. Add new server:
    - Command: `npx`
    - Arguments: `-y spec-workflow-mcp@latest`
 
 #### Windsurf (Codeium)
 
-Add to your Windsurf configuration (`~/.codeium/windsurf/mcp_config.json`):
+Add to your Windsurf configuration file (`~/.codeium/windsurf/mcp_config.json`):
 
 ```json
 {
@@ -274,9 +246,9 @@ Add to your Windsurf configuration (`~/.codeium/windsurf/mcp_config.json`):
 }
 ```
 
-#### VS Code (with MCP extension)
+#### VS Code (requires MCP extension)
 
-Add to your VS Code settings (`settings.json`):
+Add to your VS Code settings file (`settings.json`):
 
 ```json
 {
@@ -291,7 +263,7 @@ Add to your VS Code settings (`settings.json`):
 
 #### Zed
 
-Add to your Zed configuration (`~/.config/zed/settings.json`):
+Add to your Zed configuration file (`~/.config/zed/settings.json`):
 
 ```json
 {
@@ -318,7 +290,7 @@ npm install
 npm run build
 ```
 
-Then add to Claude Desktop configuration:
+Then add to Claude Desktop config:
 
 ```json
 {
@@ -333,36 +305,36 @@ Then add to Claude Desktop configuration:
 
 </details>
 
-## 🤖 AI Usage Guide
+## 🤖 AI Usage Guidelines
 
-### Make AI Use This Tool Better
+### To Help AI Use This Tool Better
 
-**Strongly recommended** to add the following prompt to your AI assistant configuration. Without it, AI may:
+**Strongly recommended** to add the following prompt to your AI assistant configuration. Without this configuration, AI might:
 
 - ❌ Not know when to invoke Spec Workflow
-- ❌ Forget to manage task progress, causing disorganized work
-- ❌ Not utilize Spec Workflow for systematic documentation
+- ❌ Forget to manage task progress, leading to chaotic work
+- ❌ Not use Spec Workflow for systematic document management
 - ❌ Unable to continuously track project status
 
 With this configuration, AI will intelligently use Spec Workflow to manage the entire development process.
 
-> **Configuration Note**: Please modify the following based on your needs:
+> **Configuration Note**: Please modify the following as needed:
 >
-> 1. Change `./specs` to your preferred documentation directory path
-> 2. Change "English" to your preferred documentation language (e.g., "Chinese")
+> 1. Change `./specs` to your preferred document directory path
+> 2. Change "English" to your preferred document language (like "Chinese")
 
 ```
 # Spec Workflow Usage Guidelines
 
 ## 1. Check Project Progress
-When user mentions continuing previous project or is unsure about current progress, proactively use:
+When users mention continuing previous projects or are unsure of current progress, proactively use:
 specs-workflow tool with action.type="check" and path="./specs"
 
-## 2. Documentation Language
-All spec workflow documents should be written in English consistently, including all content in requirements, design, and task documents.
+## 2. Document Language
+All spec workflow documents should be written consistently in English, including all content in requirements, design, and task documents.
 
-## 3. Documentation Directory
-All spec workflow documents should be placed in ./specs directory to maintain consistent project documentation organization.
+## 3. Document Directory
+All spec workflow documents should be placed in the ./specs directory to maintain consistent project document organization.
 
 ## 4. Task Management
 Always use the following to manage task progress:
@@ -375,6 +347,10 @@ Follow the workflow guidance to continue working until all tasks are completed.
 - Flexible structure: Choose single-module or multi-module organization based on project scale
 - Task granularity: Each task should be completable within 1-2 hours
 ```
+
+## 📋 Changelog
+
+For detailed version history and release notes, see [CHANGELOG.md](CHANGELOG.md).
 
 ## 🔗 Links
 

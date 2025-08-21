@@ -30,21 +30,32 @@ export async function initWorkflow(
 ): Promise<WorkflowResult> {
   const { path, featureName, introduction, onProgress } = options;
 
+  // Create feature-specific directory path first
+  const featurePath = join(path, featureName);
+
   try {
     await reportProgress(onProgress, 0, 100, "Starting initialization...");
 
-    // Create directory
+    // Create base directory
     if (!existsSync(path)) {
       mkdirSync(path, { recursive: true });
     }
 
+    // Create feature-specific directory
+    if (!existsSync(featurePath)) {
+      mkdirSync(featurePath, { recursive: true });
+    }
+
+    // Use feature path for all subsequent operations
+    const workingPath = featurePath;
+
     await reportProgress(onProgress, 50, 100, "Checking project status...");
 
     // Comprehensively check if project already exists
-    const requirementsPath = join(path, "requirements.md");
-    const designPath = join(path, "design.md");
-    const tasksPath = join(path, "tasks.md");
-    const confirmationsPath = join(path, ".workflow-confirmations.json");
+    const requirementsPath = join(workingPath, "requirements.md");
+    const designPath = join(workingPath, "design.md");
+    const tasksPath = join(workingPath, "tasks.md");
+    const confirmationsPath = join(workingPath, ".workflow-confirmations.json");
 
     // If any workflow-related files exist, consider the project already exists
     const projectExists =
@@ -56,9 +67,9 @@ export async function initWorkflow(
     if (projectExists) {
       await reportProgress(onProgress, 100, 100, "Found existing project");
 
-      const status = getWorkflowStatus(path);
-      const currentStage = getCurrentStage(status, path);
-      const progress = calculateWorkflowProgress(path, status);
+      const status = getWorkflowStatus(workingPath);
+      const currentStage = getCurrentStage(status, workingPath);
+      const progress = calculateWorkflowProgress(workingPath, status);
 
       // Build detailed existing reason
       const existingFiles = [];
@@ -71,7 +82,7 @@ export async function initWorkflow(
       // Use responseBuilder to build error response
       return {
         displayText: responseBuilder.buildErrorResponse("alreadyInitialized", {
-          path,
+          path: workingPath,
           existingFiles: existingFiles.join(", "),
         }),
         data: {
@@ -85,12 +96,16 @@ export async function initWorkflow(
     }
 
     // Generate requirements document
-    const result = createRequirementsDocument(path, featureName, introduction);
+    const result = createRequirementsDocument(
+      workingPath,
+      featureName,
+      introduction
+    );
 
     if (!result.generated) {
       return {
         displayText: responseBuilder.buildErrorResponse("invalidPath", {
-          path,
+          path: workingPath,
         }),
         data: {
           success: false,
@@ -101,18 +116,18 @@ export async function initWorkflow(
     }
 
     // Initialize status file, mark requirements stage as unconfirmed
-    updateStageConfirmation(path, "requirements", false);
-    updateStageConfirmation(path, "design", false);
-    updateStageConfirmation(path, "tasks", false);
+    updateStageConfirmation(workingPath, "requirements", false);
+    updateStageConfirmation(workingPath, "design", false);
+    updateStageConfirmation(workingPath, "tasks", false);
 
     await reportProgress(onProgress, 100, 100, "Initialization completed!");
 
     // Use responseBuilder to build success response
-    return responseBuilder.buildInitResponse(path, featureName);
+    return responseBuilder.buildInitResponse(workingPath, featureName);
   } catch (error) {
     return {
       displayText: responseBuilder.buildErrorResponse("invalidPath", {
-        path,
+        path: featurePath,
         error: String(error),
       }),
       data: {
